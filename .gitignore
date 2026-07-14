@@ -1,0 +1,28 @@
+# 依赖 / 缓存
+tts_cache/*
+!tts_cache/.gitkeep
+
+# 用户上传内容（不纳入版本库）
+avatars/*
+!avatars/.gitkeep
+submissions/*
+!submissions/.gitkeep
+
+# 数据库备份 / 压缩包
+DBbackup/
+*.zip
+*.tar.gz
+*.sql.bak
+
+# 本地配置（含敏感信息，请勿提交）
+# 如需忽略本地真实配置，可解除下面注释并改用 config/database.local.php
+# config/database.php
+
+# 备份 / 临时文件
+*.bak
+*.log
+.DS_Store
+Thumbs.db
+
+# 管理员 IP 白名单（部署时本地维护）
+config/admin_whitelist.txt

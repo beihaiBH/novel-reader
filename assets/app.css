@@ -1,0 +1,438 @@
+/* ====== 全局样式 ====== */
+
+/* 底部导航栏 */
+.bottom-nav {
+  position: fixed !important; bottom: 0; left: 0; right: 0;
+  height: 26px;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 9998;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  border-top: 1px solid rgba(0,0,0,0.03);
+}
+[data-theme="dark"] .bottom-nav {
+  background: rgba(26,20,16,0.35);
+  border-top-color: rgba(255,255,255,0.03);
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: rgba(153,153,153,0.7);
+  font-size: 8px;
+  padding: 1px 8px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-item .nav-icon { font-size: 13px; line-height: 1.3; }
+.nav-item .nav-label { font-size: 8px; }
+.nav-item:hover,
+.nav-item.active { color: #c4a882; }
+.page-with-nav { padding-bottom: 28px; }
+
+/* ====== 登录注册模态框 ====== */
+.auth-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.auth-overlay.show { display: flex; }
+.auth-modal {
+  width: 340px;
+  max-width: 90vw;
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px 28px 28px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: modalSlide 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+[data-theme="dark"] .auth-modal { background: #2c2620; color: #e8ddd0; }
+@keyframes modalSlide {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.auth-close {
+  position: absolute; top: 12px; right: 12px;
+  background: none; border: none; font-size: 20px;
+  cursor: pointer; color: #999; padding: 4px 8px;
+  border-radius: 8px; transition: all 0.2s;
+}
+.auth-close:hover { background: #f5f0eb; }
+.auth-title { font-size: 20px; font-weight: 700; text-align: center; margin-bottom: 4px; }
+.auth-subtitle { font-size: 13px; color: #999; text-align: center; margin-bottom: 20px; }
+.auth-tabs {
+  display: flex; gap: 0; margin-bottom: 20px;
+  background: #f5f0eb; border-radius: 12px; padding: 3px;
+}
+[data-theme="dark"] .auth-tabs { background: #3a342e; }
+.auth-tab {
+  flex: 1; padding: 10px; text-align: center; border: none;
+  background: transparent; border-radius: 10px; font-size: 14px;
+  font-weight: 600; cursor: pointer; color: #888; transition: all 0.25s;
+  font-family: inherit;
+}
+.auth-tab.active { background: #fff; color: #2c1810; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+[data-theme="dark"] .auth-tab.active { background: #4a443e; color: #e8ddd0; }
+.auth-form { display: none; }
+.auth-form.show { display: block; }
+.auth-input-group { margin-bottom: 14px; }
+.auth-input-group label {
+  display: block; font-size: 12px; color: #888; margin-bottom: 4px; font-weight: 600;
+}
+.auth-input-group input, .auth-input-group textarea {
+  width: 100%; padding: 10px 14px; border: 1px solid #ddd; border-radius: 10px;
+  font-size: 14px; font-family: inherit; outline: none; transition: border 0.2s;
+  background: #fafafa; box-sizing: border-box;
+}
+[data-theme="dark"] .auth-input-group input,
+[data-theme="dark"] .auth-input-group textarea {
+  background: #3a342e; border-color: #555; color: #e8ddd0;
+}
+.auth-input-group input:focus { border-color: #c4a882; background: #fff; }
+.auth-btn {
+  width: 100%; padding: 12px; border: none; border-radius: 12px;
+  font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit;
+  transition: all 0.25s; margin-top: 4px;
+}
+.auth-btn-primary { background: linear-gradient(135deg, #c4a882, #a08060); color: #fff; }
+.auth-btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(164,128,96,0.3); }
+.auth-btn-primary:disabled { opacity: 0.6; transform: none; }
+.auth-error { font-size: 12px; color: #e74c3c; text-align: center; margin-top: 10px; min-height: 18px; }
+.auth-avatar-upload { text-align: center; margin-bottom: 14px; }
+.auth-avatar-preview {
+  width: 64px; height: 64px; border-radius: 50%; background: #f5f0eb;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 28px; overflow: hidden; border: 2px dashed #ddd; cursor: pointer;
+  transition: all 0.2s; position: relative;
+}
+.auth-avatar-preview:hover { border-color: #c4a882; }
+.auth-avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
+.auth-avatar-btn {
+  display: inline-block; margin-top: 6px; font-size: 12px; color: #c4a882;
+  cursor: pointer; padding: 4px 12px; border: 1px solid #c4a882;
+  border-radius: 20px; transition: all 0.2s;
+}
+.auth-avatar-btn:hover { background: #c4a882; color: #fff; }
+.auth-avatar-btn input { display: none; }
+.auth-loading {
+  display: inline-block; width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+  border-radius: 50%; animation: authSpin 0.6s linear infinite;
+  vertical-align: middle; margin-right: 6px;
+}
+@keyframes authSpin { to { transform: rotate(360deg); } }
+
+/* ====== Toast 提示 ====== */
+.app-toast {
+  position: fixed; bottom: 80px; left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(0,0,0,0.82);
+  color: #fff; padding: 10px 24px; border-radius: 30px;
+  font-size: 13px; z-index: 99999; opacity: 0;
+  transition: all 0.3s ease; pointer-events: none;
+  white-space: nowrap; max-width: 80vw; overflow: hidden;
+  text-overflow: ellipsis;
+}
+.app-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ====== 个人中心 ====== */
+.uc-page { min-height: 100vh; background: #f5f0eb; padding-bottom: 60px; }
+[data-theme="dark"] .uc-page { background: #1a1410; }
+.uc-header {
+  background: linear-gradient(135deg, #2c1810, #4a2c20);
+  padding: 48px 20px 24px; text-align: center; color: #f0e6d3;
+}
+.uc-avatar {
+  width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 12px;
+  background: rgba(255,255,255,0.12); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 32px; overflow: hidden; border: 3px solid rgba(255,255,255,0.15);
+}
+.uc-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.uc-name { font-size: 18px; font-weight: 700; }
+.uc-badge { font-size: 12px; color: #c4a882; margin-top: 2px; }
+.uc-tags { display: none; gap: 4px; flex-wrap: wrap; justify-content: center; margin-top: 4px; padding: 0 20px; }
+.uc-tag { display: inline-flex; align-items: center; background: linear-gradient(135deg, #a8d8ea, #7ec8e3); color: #1a5276; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 8px; letter-spacing: 0.5px; box-shadow: 0 1px 4px rgba(126,200,227,0.3); }
+.uc-level-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 0 20px; }
+.uc-level-bar {
+  flex: 1; height: 6px; background: rgba(255,255,255,0.12);
+  border-radius: 3px; overflow: hidden;
+}
+.uc-level-fill {
+  height: 100%; background: linear-gradient(90deg, #c4a882, #e8c888);
+  border-radius: 3px; transition: width 0.5s ease;
+}
+.uc-level-text { font-size: 11px; color: #c4a882; white-space: nowrap; }
+.uc-stats {
+  display: flex; justify-content: center; gap: 20px; margin-top: 16px;
+}
+.uc-stat { text-align: center; }
+.uc-stat-num { font-size: 18px; font-weight: 700; color: #c4a882; }
+.uc-stat-label { font-size: 10px; color: rgba(255,255,255,0.5); }
+.uc-body { padding: 16px; }
+.uc-card {
+  background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+[data-theme="dark"] .uc-card { background: #2c2620; color: #e8ddd0; }
+.uc-card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; color: #2c1810; }
+[data-theme="dark"] .uc-card-title { color: #e8ddd0; }
+.uc-card-title .icon { margin-right: 6px; }
+.uc-menu-item {
+  display: flex; align-items: center; gap: 10px; padding: 12px 0;
+  border-bottom: 1px solid #f5f0eb; cursor: pointer; transition: all 0.2s;
+  text-decoration: none; color: inherit;
+}
+.uc-menu-item:last-child { border-bottom: none; }
+.uc-menu-item:hover { opacity: 0.7; }
+.uc-menu-item .mi-icon { font-size: 20px; }
+.uc-menu-item .mi-text { flex: 1; font-size: 14px; }
+.uc-menu-item .mi-arrow { color: #ccc; font-size: 12px; }
+.uc-logout-btn {
+  width: 100%; padding: 12px; border: 1px solid #e74c3c; border-radius: 12px;
+  background: transparent; color: #e74c3c; font-size: 14px; cursor: pointer;
+  font-family: inherit; transition: all 0.2s; margin-top: 8px;
+}
+.uc-logout-btn:hover { background: #e74c3c; color: #fff; }
+
+/* ====== 等级阶段视觉样式 ====== */
+/* 注意：level-stage-xxx 类直接加在 .uc-header 上，选择器是 .uc-header.level-stage-xxx（不带空格） */
+
+/* ---- 流光动效关键帧（Lv10专用） ---- */
+@keyframes lv10Flow {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+@keyframes lv10FlowComment {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* 第一阶段：入门基础区 Lv1~Lv3 — 仅基础文字配色，无动效 */
+.uc-header.level-stage-basic {
+  background: linear-gradient(135deg, #3a3a3a, #5a5a5a) !important;
+}
+.uc-header.level-stage-basic .uc-level-fill {
+  background: linear-gradient(90deg, #999, #bbb) !important;
+}
+.uc-header.level-stage-basic .uc-level-text,
+.uc-header.level-stage-basic .uc-stat-num {
+  color: #ccc !important;
+}
+
+/* 第二阶段：黄金尊贵区 Lv4~Lv7 — 暗金/香槟金渐变 + 金属质感阴影 */
+.uc-header.level-stage-gold {
+  background: linear-gradient(135deg, #2c1810, #6d4c2e) !important;
+}
+.uc-header.level-stage-gold .uc-level-fill {
+  background: linear-gradient(90deg, #c4a882, #e8c888) !important;
+  box-shadow: 0 0 6px rgba(212,168,64,0.3);
+}
+.uc-header.level-stage-gold .uc-level-text,
+.uc-header.level-stage-gold .uc-stat-num {
+  color: #d4a840 !important;
+  text-shadow: 0 0 8px rgba(212,168,64,0.3);
+}
+.uc-header.level-stage-gold .uc-level-bar {
+  background: rgba(212,168,64,0.12) !important;
+}
+.uc-header.level-stage-gold .uc-avatar {
+  border-color: rgba(212,168,64,0.3) !important;
+}
+
+/* 第三阶段：巅峰神秘区 Lv8~Lv9 — 紫金/黑底银铂渐变 */
+.uc-header.level-stage-top {
+  background: linear-gradient(135deg, #0d0a1a, #1a0a2e, #2d1550) !important;
+}
+.uc-header.level-stage-top .uc-level-fill {
+  background: linear-gradient(90deg, #b388ff, #e0b0ff) !important;
+  box-shadow: 0 0 10px rgba(179,136,255,0.5);
+}
+.uc-header.level-stage-top .uc-level-text,
+.uc-header.level-stage-top .uc-stat-num {
+  color: #e0b0ff !important;
+  text-shadow: 0 0 12px rgba(179,136,255,0.5);
+}
+.uc-header.level-stage-top .uc-level-bar {
+  background: rgba(179,136,255,0.12) !important;
+}
+.uc-header.level-stage-top .uc-avatar {
+  border-color: rgba(179,136,255,0.4) !important;
+  box-shadow: 0 0 16px rgba(179,136,255,0.3);
+}
+
+/* 第四阶段：满级至尊 Lv10 — 烫金渐变文字 + 流光动效 + 大面积留白 */
+.uc-header.level-stage-lv10 {
+  background: linear-gradient(135deg, #1a1410, #2a2018) !important;
+  padding: 52px 20px 28px !important;  /* 增大留白 */
+}
+.uc-header.level-stage-lv10 .uc-name {
+  font-size: 22px !important;
+  letter-spacing: 3px;
+}
+.uc-header.level-stage-lv10 .uc-level-fill {
+  /* 满级不显示进度条（已满） */
+  display: none !important;
+}
+.uc-header.level-stage-lv10 .uc-level-bar {
+  display: none !important;
+}
+.uc-header.level-stage-lv10 .uc-level-text {
+  /* 烫金渐变 + 流光动效 */
+  background: linear-gradient(90deg, #d4a840 0%, #f7d875 25%, #d4a840 50%, #f7d875 75%, #d4a840 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: lv10Flow 3s linear infinite !important;
+  font-weight: 900 !important;
+  font-size: 16px !important;
+  text-shadow: none !important;
+}
+.uc-header.level-stage-lv10 .uc-stat-num {
+  background: linear-gradient(90deg, #d4a840 0%, #f7d875 25%, #d4a840 50%, #f7d875 75%, #d4a840 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: lv10Flow 3s linear infinite !important;
+  font-weight: 900 !important;
+}
+.uc-header.level-stage-lv10 .uc-stat-label {
+  color: rgba(212,168,64,0.6) !important;
+}
+.uc-header.level-stage-lv10 .uc-avatar {
+  border-color: rgba(212,168,64,0.4) !important;
+  box-shadow: 0 0 20px rgba(212,168,64,0.25);
+}
+.uc-header.level-stage-lv10 .uc-badge {
+  color: #d4a840 !important;
+}
+
+/* ====== 升级缺口行 ====== */
+.uc-gap-row {
+  text-align: center;
+  margin-top: 8px;
+  padding: 0 20px;
+}
+.uc-gap-text {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.5px;
+}
+.uc-header.level-stage-lv10 .uc-gap-row {
+  display: none !important;
+}
+
+/* ====== 签到按钮 ====== */
+.uc-checkin-btn {
+  padding: 4px 14px;
+  background: linear-gradient(135deg, #ff9a56, #e67e22);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.uc-checkin-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(230,126,34,0.4);
+}
+.uc-checkin-btn:disabled,
+.uc-checkin-btn.checked-in {
+  background: #aaa;
+  cursor: default;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ====== 个人主页 ====== */
+.profile-page { min-height: 100vh; background: #f5f0eb; }
+[data-theme="dark"] .profile-page { background: #1a1410; }
+.profile-header {
+  background: linear-gradient(135deg, #2c1810, #4a2c20);
+  padding: 40px 20px 24px; text-align: center; color: #f0e6d3;
+  transition: all 0.5s ease;
+}
+/* 等级阶段：profile-header覆盖 */
+.profile-header.level-stage-basic {
+  background: linear-gradient(135deg, #3a3a3a, #5a5a5a) !important;
+}
+.profile-header.level-stage-gold {
+  background: linear-gradient(135deg, #2c1810, #6d4c2e) !important;
+}
+.profile-header.level-stage-top {
+  background: linear-gradient(135deg, #0d0a1a, #1a0a2e, #2d1550) !important;
+}
+.profile-header.level-stage-lv10 {
+  background: linear-gradient(135deg, #1a1410, #2a2018) !important;
+  padding: 44px 20px 28px !important;
+}
+.profile-avatar {
+  width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 12px;
+  background: rgba(255,255,255,0.12); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 36px; overflow: hidden; border: 3px solid rgba(255,255,255,0.15);
+  position: relative;
+}
+.profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.profile-avatar .crown {
+  position: absolute; top: -8px; right: -8px; font-size: 20px;
+  filter: drop-shadow(0 2px 4px rgba(255,215,0,0.5));
+}
+.profile-name { font-size: 20px; font-weight: 700; }
+.profile-badge { font-size: 12px; color: #c4a882; margin-top: 2px; }
+.profile-tags { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+.profile-tag { display: inline-flex; align-items: center; background: linear-gradient(135deg, #a8d8ea, #7ec8e3); color: #1a5276; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 8px; letter-spacing: 0.5px; box-shadow: 0 1px 4px rgba(126,200,227,0.3); }
+.profile-bio { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 8px; max-width: 300px; margin-left: auto; margin-right: auto; }
+.profile-level-row {
+  display: flex; align-items: center; gap: 8px; margin-top: 12px; padding: 0 40px;
+}
+.profile-level-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.12); border-radius: 3px; overflow: hidden; }
+.profile-level-fill { height: 100%; background: linear-gradient(90deg, #c4a882, #e8c888); border-radius: 3px; transition: width 0.5s ease; }
+.profile-level-text { font-size: 11px; color: #c4a882; white-space: nowrap; }
+.profile-stats {
+  display: flex; justify-content: center; gap: 24px; margin-top: 16px;
+}
+.profile-stat { text-align: center; }
+.profile-stat-num { font-size: 20px; font-weight: 700; color: #c4a882; }
+.profile-stat-label { font-size: 10px; color: rgba(255,255,255,0.5); }
+.profile-body { padding: 16px; }
+.profile-card {
+  background: #fff; border-radius: 16px; padding: 16px; margin-bottom: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+[data-theme="dark"] .profile-card { background: #2c2620; color: #e8ddd0; }
+.profile-card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+.profile-btn {
+  display: inline-block; padding: 8px 20px; border: 1px solid #c4a882;
+  border-radius: 20px; background: transparent; color: #c4a882;
+  font-size: 13px; cursor: pointer; font-family: inherit;
+  transition: all 0.25s; text-decoration: none;
+}
+.profile-btn:hover { background: #c4a882; color: #fff; }
+
+/* ====== 隐私协议勾选框 ====== */
+.auth-agreement { display: flex; align-items: flex-start; gap: 6px; margin: 8px 0 12px; font-size: 12px; color: #999; line-height: 1.5; }
+.auth-agreement input[type="checkbox"] { margin-top: 2px; width: 14px; height: 14px; accent-color: #8b6f5c; cursor: pointer; flex-shrink: 0; }
+.auth-agreement label { cursor: pointer; }
+.auth-agreement a { color: #8b6f5c; text-decoration: underline; }
+.auth-agreement a:hover { color: #6d5544; }

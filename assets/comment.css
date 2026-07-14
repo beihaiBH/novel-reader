@@ -1,0 +1,58 @@
+/* ==========================================
+   小说评论系统 - 共享样式
+   用于 example.com 下所有小说页面
+   ========================================== */
+
+/* ---------- 输入区标签提示 ---------- */
+.input-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    padding: 0 4px;
+    flex-wrap: wrap;
+}
+.tag-hint-label {
+    font-size: 11px;
+    color: #bbb;
+    flex-shrink: 0;
+}
+.tag-hint-list {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+.tag-hint-item {
+    cursor: pointer;
+    font-size: 10px;
+    padding: 1px 8px;
+    border-radius: 10px;
+    transition: all .15s;
+    border: 1px solid transparent;
+    letter-spacing: 0.3px;
+}
+.tag-hint-item:hover { opacity: 0.8; }
+.tag-hint-item.tag-gold {
+    background: rgba(218,165,32,0.15);
+    color: #d4a840;
+    border-color: rgba(218,165,32,0.3);
+}
+.tag-hint-item.tag-normal {
+    background: rgba(100,160,200,0.12);
+    color: #70a8c8;
+    border-color: rgba(100,160,200,0.2);
+}
+[data-theme="dark"] .input-tag-row { border-top-color: var(--border); }
+
+/* ---------- 评论标签金色版 ---------- */
+.comment-tag.tag-gold {
+    background: linear-gradient(135deg, #d4a840, #b8860b);
+    color: #fff6e0;
+    box-shadow: 0 0 8px rgba(218,165,32,0.4);
+    border: 1px solid rgba(255,215,0,0.3);
+}
+[data-theme="dark"] .comment-tag.tag-gold {
+    background: linear-gradient(135deg, #d4a840, #b8860b);
+    color: #fff6e0;
+    box-shadow: 0 0 10px rgba(218,165,32,0.3);
+}

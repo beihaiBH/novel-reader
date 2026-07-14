@@ -1,0 +1,9 @@
+# 对所有搜索引擎蜘蛛生效
+User-agent: *
+
+# 全部页面允许抓取
+Allow: /
+
+# 填写站点地图地址
+Sitemap: https://example.com/sitemap.xml
+Sitemap: https://www.example.com/sitemap.xml

@@ -1,0 +1,187 @@
+/* ============================================================
+ * levels.css —— 小说站用户等级视觉系统（5 阶段进阶）
+ * 覆盖三大场景：评论区徽章 / 个人主页 / 个人中心
+ * 阶段划分：
+ *   阶段一 朴素基础  Lv0-1   深灰中性
+ *   阶段二 黄金奢侈  Lv2-4   暗金→香槟金渐变
+ *   阶段三 钻石璀璨  Lv5-7   冰蓝银白 + 发光
+ *   阶段四 皇家紫韵  Lv8-9   深紫 + 亮金
+ *   阶段五 神圣流光  Lv10    流光赤金 + 神圣光晕（动画）
+ * 说明：颜色/阴影/字重逐级递增，视觉权重逐级加强。
+ * ============================================================ */
+
+/* ====== 1. 全局 CSS 变量系统（10 级配色统一入口） ====== */
+:root {
+  /* Lv0-1 朴素基础 */
+  --lv0-text:#888;   --lv0-bg:#f5f5f5;   --lv0-border:#e0e0e0;   --lv0-accent:#999;   --lv0-glow:transparent;
+  --lv1-text:#555;   --lv1-bg:#f0f0f0;   --lv1-border:#ddd;      --lv1-accent:#8a8a8a; --lv1-glow:transparent;
+  /* Lv2-4 黄金奢侈（暗金→古铜→香槟金） */
+  --lv2-text:#b5892b; --lv2-bg:linear-gradient(135deg,#3a2a12,#6d4c2e); --lv2-border:rgba(197,155,60,.45); --lv2-accent:#c99b3c; --lv2-glow:rgba(201,155,60,.28);
+  --lv3-text:#cfa23a; --lv3-bg:linear-gradient(135deg,#2c1d0d,#7a552e); --lv3-border:rgba(212,168,64,.5);  --lv3-accent:#d4a840; --lv3-glow:rgba(212,168,64,.32);
+  --lv4-text:#e6bd4d; --lv4-bg:linear-gradient(135deg,#241608,#8a5f2e); --lv4-border:rgba(232,200,120,.55); --lv4-accent:#e8c878; --lv4-glow:rgba(232,200,120,.38);
+  /* Lv5-7 钻石璀璨（冰蓝→银白） */
+  --lv5-text:#3fa9d6; --lv5-bg:linear-gradient(135deg,#0e2530,#1c4a5e); --lv5-border:rgba(120,210,240,.5);  --lv5-accent:#7ad2f0; --lv5-glow:rgba(120,210,240,.45);
+  --lv6-text:#54c3e8; --lv6-bg:linear-gradient(135deg,#0b1e2c,#1a5570); --lv6-border:rgba(150,225,250,.55); --lv6-accent:#9ce1fa; --lv6-glow:rgba(150,225,250,.5);
+  --lv7-text:#8fe3ff; --lv7-bg:linear-gradient(135deg,#08161f,#124a68,#1f6f95); --lv7-border:rgba(200,240,255,.6); --lv7-accent:#cdf3ff; --lv7-glow:rgba(180,235,255,.6);
+  /* Lv8-9 皇家紫韵（深紫 + 亮金） */
+  --lv8-text:#c9a227; --lv8-bg:linear-gradient(135deg,#160a2b,#3a1a63); --lv8-border:rgba(201,162,39,.55); --lv8-accent:#e0b0ff; --lv8-glow:rgba(179,136,255,.5);
+  --lv9-text:#e8c24a; --lv9-bg:linear-gradient(135deg,#0d0620,#2d1155,#4a1f80); --lv9-border:rgba(232,194,74,.6); --lv9-accent:#f0c0ff; --lv9-glow:rgba(200,150,255,.6);
+  /* Lv10 神圣流光 */
+  --lv10-accent:#f7d875; --lv10-glow:rgba(212,168,64,.55);
+}
+
+/* ====== 2. 流光/发光动画关键帧 ====== */
+/* Lv10 金属渐变横向流动 */
+@keyframes lvFlow {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+/* Lv10 神圣光晕呼吸 */
+@keyframes lvHalo {
+  0%,100% { box-shadow: 0 0 12px rgba(212,168,64,.45), 0 0 28px rgba(247,216,117,.25); }
+  50%     { box-shadow: 0 0 20px rgba(212,168,64,.7),  0 0 46px rgba(247,216,117,.4); }
+}
+/* 钻石折射微光 */
+@keyframes lvDiamond {
+  0%,100% { box-shadow: 0 0 8px var(--lv6-glow); }
+  50%     { box-shadow: 0 0 16px var(--lv7-glow); }
+}
+
+/* ============================================================
+ * 3. 评论区等级徽章 .level-badge-0 ~ .level-badge-10
+ * 尺寸适中、清晰易读，昵称右侧展示
+ * ============================================================ */
+.comment-level-badge,
+[class*="level-badge-"] {
+  display: inline-flex; align-items: center;
+  font-size: 9px; font-weight: 800;
+  padding: 1px 7px; border-radius: 7px;
+  letter-spacing: .3px; margin-left: 4px;
+  line-height: 1.6; vertical-align: middle;
+  white-space: nowrap;
+}
+/* Lv0 不展示徽章（渲染层已控制），保留占位 */
+.level-badge-0 { display:none; }
+/* --- 阶段一 朴素基础 Lv1 --- */
+.level-badge-1 { background:var(--lv1-bg); color:var(--lv1-text); border:1px solid var(--lv1-border); }
+/* --- 阶段二 黄金奢侈 Lv2-4：暗金渐变 + 金属阴影，逐级加亮 --- */
+.level-badge-2 { background:var(--lv2-bg); color:var(--lv2-text); border:1px solid var(--lv2-border); box-shadow:0 1px 5px var(--lv2-glow); }
+.level-badge-3 { background:var(--lv3-bg); color:var(--lv3-text); border:1px solid var(--lv3-border); box-shadow:0 1px 6px var(--lv3-glow); }
+.level-badge-4 { background:var(--lv4-bg); color:var(--lv4-text); border:1px solid var(--lv4-border); box-shadow:0 1px 8px var(--lv4-glow); font-weight:900; }
+/* --- 阶段三 钻石璀璨 Lv5-7：冰蓝银白 + 发光边框 --- */
+.level-badge-5 { background:var(--lv5-bg); color:var(--lv5-text); border:1px solid var(--lv5-border); box-shadow:0 0 8px var(--lv5-glow); }
+.level-badge-6 { background:var(--lv6-bg); color:var(--lv6-text); border:1px solid var(--lv6-border); box-shadow:0 0 10px var(--lv6-glow); }
+.level-badge-7 { background:var(--lv7-bg); color:var(--lv7-text); border:1px solid var(--lv7-border); box-shadow:0 0 12px var(--lv7-glow); font-weight:900; }
+/* --- 阶段四 皇家紫韵 Lv8-9：深紫底 + 亮金字 --- */
+.level-badge-8 { background:var(--lv8-bg); color:var(--lv8-text); border:1px solid var(--lv8-border); box-shadow:0 0 10px var(--lv8-glow); }
+.level-badge-9 { background:var(--lv9-bg); color:var(--lv9-text); border:1px solid var(--lv9-border); box-shadow:0 0 14px var(--lv9-glow); font-weight:900; }
+/* --- 阶段五 神圣流光 Lv10：烫金流光 + 光晕 --- */
+.level-badge-10 {
+  background: linear-gradient(90deg,#1a1410 0%,#2a2018 18%,#d4a840 38%,#f7d875 52%,#d4a840 66%,#2a2018 84%,#1a1410 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border: 1px solid rgba(212,168,64,.55);
+  box-shadow: 0 0 10px rgba(212,168,64,.4), inset 0 0 20px rgba(212,168,64,.06);
+  animation: lvFlow 3s linear infinite;
+  font-weight: 900; padding: 1px 9px;
+}
+
+/* ============================================================
+ * 4. 评论区：昵称 & 头像随等级变化（4 级以上）
+ * ============================================================ */
+/* 昵称配色：Lv4 以上进入相应阶段配色 */
+.lv-name-4,.lv-name-5 { color:var(--lv4-text) !important; }
+.lv-name-6,.lv-name-7 { color:var(--lv7-text) !important; text-shadow:0 0 6px var(--lv6-glow); }
+.lv-name-8            { color:var(--lv8-accent) !important; text-shadow:0 0 6px var(--lv8-glow); }
+.lv-name-9           { color:var(--lv9-accent) !important; text-shadow:0 0 8px var(--lv9-glow); }
+.lv-name-10 {
+  background: linear-gradient(90deg,#d4a840,#f7d875,#d4a840,#f7d875,#d4a840);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent !important;
+  animation: lvFlow 3s linear infinite; font-weight: 900 !important;
+}
+/* 头像外围描边：金边 / 冰边 / 紫边 / 神圣金边 */
+.lv-avatar-4,.lv-avatar-5 { border:2px solid var(--lv4-accent) !important; box-shadow:0 0 6px var(--lv4-glow); }
+.lv-avatar-6,.lv-avatar-7 { border:2px solid var(--lv7-accent) !important; box-shadow:0 0 8px var(--lv7-glow); }
+.lv-avatar-8,.lv-avatar-9 { border:2px solid var(--lv9-accent) !important; box-shadow:0 0 10px var(--lv9-glow); }
+.lv-avatar-10 {
+  border:2px solid var(--lv10-accent) !important;
+  box-shadow:0 0 12px var(--lv10-glow);
+  animation: lvHalo 2.6s ease-in-out infinite;
+}
+
+/* ============================================================
+ * 5. 个人主页 / 个人中心 主题 .profile-theme-0 ~ .profile-theme-10
+ * 类加在 .uc-header 或 .profile-header 上；用变量驱动子元素
+ * ============================================================ */
+/* --- 头部背景（分级） --- */
+.profile-theme-0,.profile-theme-1 { background:linear-gradient(135deg,#3a3a3a,#5a5a5a) !important; --t-accent:#cfcfcf; --t-bar:rgba(255,255,255,.18); --t-glow:transparent; }
+.profile-theme-2 { background:var(--lv2-bg) !important; --t-accent:var(--lv2-accent); --t-bar:rgba(201,155,60,.14); --t-glow:var(--lv2-glow); }
+.profile-theme-3 { background:var(--lv3-bg) !important; --t-accent:var(--lv3-accent); --t-bar:rgba(212,168,64,.14); --t-glow:var(--lv3-glow); }
+.profile-theme-4 { background:var(--lv4-bg) !important; --t-accent:var(--lv4-accent); --t-bar:rgba(232,200,120,.16); --t-glow:var(--lv4-glow); }
+.profile-theme-5 { background:var(--lv5-bg) !important; --t-accent:var(--lv5-accent); --t-bar:rgba(120,210,240,.16); --t-glow:var(--lv5-glow); }
+.profile-theme-6 { background:var(--lv6-bg) !important; --t-accent:var(--lv6-accent); --t-bar:rgba(150,225,250,.16); --t-glow:var(--lv6-glow); }
+.profile-theme-7 { background:var(--lv7-bg) !important; --t-accent:var(--lv7-accent); --t-bar:rgba(200,240,255,.18); --t-glow:var(--lv7-glow); }
+.profile-theme-8 { background:var(--lv8-bg) !important; --t-accent:var(--lv8-accent); --t-bar:rgba(179,136,255,.16); --t-glow:var(--lv8-glow); }
+.profile-theme-9 { background:var(--lv9-bg) !important; --t-accent:var(--lv9-accent); --t-bar:rgba(200,150,255,.18); --t-glow:var(--lv9-glow); }
+.profile-theme-10 {
+  background:linear-gradient(135deg,#1a1410,#2a2018) !important;
+  --t-accent:var(--lv10-accent); --t-bar:rgba(212,168,64,.16); --t-glow:var(--lv10-glow);
+  padding-top:48px !important; padding-bottom:28px !important; /* 大面积留白 */
+}
+
+/* --- 进度条填充 & 轨道（消费变量，uc + profile 通用） --- */
+[class*="profile-theme-"] .uc-level-fill,
+[class*="profile-theme-"] .profile-level-fill {
+  background: var(--t-accent) !important;
+  box-shadow: 0 0 6px var(--t-glow);
+}
+[class*="profile-theme-"] .uc-level-bar,
+[class*="profile-theme-"] .profile-level-bar {
+  background: var(--t-bar) !important;
+}
+/* --- 等级文字 & 统计数字 --- */
+[class*="profile-theme-"] .uc-level-text,
+[class*="profile-theme-"] .profile-level-text,
+[class*="profile-theme-"] .uc-stat-num,
+[class*="profile-theme-"] .profile-stat-num {
+  color: var(--t-accent) !important;
+  text-shadow: 0 0 8px var(--t-glow);
+}
+/* --- 头像描边 --- */
+[class*="profile-theme-"] .uc-avatar,
+[class*="profile-theme-"] .profile-avatar {
+  border-color: var(--t-accent) !important;
+  box-shadow: 0 0 14px var(--t-glow);
+}
+
+/* --- 阶段三 钻石：头像加钻石微光动画 --- */
+.profile-theme-5 .uc-avatar,.profile-theme-6 .uc-avatar,.profile-theme-7 .uc-avatar,
+.profile-theme-5 .profile-avatar,.profile-theme-6 .profile-avatar,.profile-theme-7 .profile-avatar {
+  animation: lvDiamond 2.8s ease-in-out infinite;
+}
+
+/* --- 阶段五 Lv10 神圣流光：文字流光 + 头像光晕 + 隐藏进度 --- */
+.profile-theme-10 .uc-name,
+.profile-theme-10 .profile-name { letter-spacing:2px; font-weight:900; }
+.profile-theme-10 .uc-level-text,
+.profile-theme-10 .profile-level-text,
+.profile-theme-10 .uc-stat-num,
+.profile-theme-10 .profile-stat-num {
+  background: linear-gradient(90deg,#d4a840 0%,#f7d875 25%,#d4a840 50%,#f7d875 75%,#d4a840 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent !important;
+  animation: lvFlow 3s linear infinite;
+  font-weight: 900 !important; text-shadow: none !important;
+}
+.profile-theme-10 .uc-avatar,
+.profile-theme-10 .profile-avatar {
+  animation: lvHalo 2.6s ease-in-out infinite;
+}
+/* 满级隐藏进度条 */
+.profile-theme-10 .uc-level-bar,
+.profile-theme-10 .profile-level-bar { display:none !important; }
