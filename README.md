@@ -5,7 +5,46 @@
 > 移动端优先设计，支持深色模式、语音朗读、章节进度记忆。
 
 ---
+## 🖼️ 演示截图
 
+> 截图文件位于 `screenshots/` 目录下。
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="screenshots/阅读页面.jpg" alt="阅读页" width="280"/>
+      <br/>
+      <sub>📖 阅读页面</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="screenshots/书架.jpg" alt="书架首页" width="280"/>
+      <br/>
+      <sub>🏠 书架首页</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="screenshots/评论区.jpg" alt="评论区" width="280"/>
+      <br/>
+      <sub>💬 评论区</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="screenshots/个人.jpg" alt="个人中心" width="280"/>
+      <br/>
+      <sub>👤 个人中心</sub>
+    </td>
+  </tr>
+</table>
+
+| 页面 | 主要功能 |
+|:-----|:---------|
+| 📖 阅读页面 | 小说正文展示、字体/主题切换、阅读进度自动保存 |
+| 🏠 书架首页 | 小说列表、搜索 |
+| 💬 评论区 | 支持回复、点赞、标签系统（⭐金标/银标/普通） |
+| 👤 个人中心 | 积分等级、阅读统计、绑定邮箱、修改资料 |
+
+> 💡 截图文件位于 [`screenshots/`](screenshots/) 目录。
+> 
 ## ✨ 功能特性
 
 ### 阅读体验
