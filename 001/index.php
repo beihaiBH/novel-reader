@@ -1,6 +1,6 @@
 <?php
 $NOVEL_ID = '001';
-$file = __DIR__ . '/《我在追捕我自己》作者GORE.txt';
+$file = __DIR__ . './sample.txt';
 $content = file_get_contents($file);
 $lines = explode("\n", $content);
 
