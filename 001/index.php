@@ -2937,6 +2937,7 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
 })();
 
 </script>
+<script>
 /* ====== 段落高亮笔记（数据库永久保存，登录用户可跨设备同步） ====== */
 (function(){
   var NID='001', CH=<?= (int)$activeChapter ?>;
@@ -3156,5 +3157,6 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
   if(document.readyState!=='loading') applyAll();
   else document.addEventListener('DOMContentLoaded', applyAll);
 })();
+</script>
 </body>
 </html>
