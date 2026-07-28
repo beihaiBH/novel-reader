@@ -110,7 +110,7 @@ button { width: 100%; margin-top: 22px; padding: 12px; border: none; border-radi
 <body>
 <div class="box">
   <h1>📚 安装向导</h1>
-  <div class="sub">小说在线阅读平台 · v2.0</div>
+  <div class="sub">小说在线阅读平台 · v3.0</div>
   <?php if ($err): ?><div class="alert err"><?= htmlspecialchars($err) ?></div><?php endif; ?>
   <?php if ($done): ?>
     <div class="alert ok"><?= htmlspecialchars($msg) ?></div>

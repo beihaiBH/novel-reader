@@ -31,7 +31,7 @@ function setUser(data) {
     // 把本地已保存的登录态清空（否则会出现“明明登录了却被当成未登录”）。
     if (data.token) localStorage.setItem('novel_token', data.token);
     if (data.uuid) localStorage.setItem('novel_uuid', data.uuid);
-    localStorage.setItem('your_db_username', data.username || '');
+    localStorage.setItem('novel_username', data.username || '');
     localStorage.setItem('novel_nickname', data.nickname || '');
   }
 }
@@ -42,7 +42,7 @@ function getUser() {
   return {
     token: token,
     uuid: localStorage.getItem('novel_uuid') || '',
-    username: localStorage.getItem('your_db_username') || '',
+    username: localStorage.getItem('novel_username') || '',
     nickname: localStorage.getItem('novel_nickname') || ''
   };
 }
@@ -50,7 +50,7 @@ function getUser() {
 function logout() {
   localStorage.removeItem('novel_token');
   localStorage.removeItem('novel_uuid');
-  localStorage.removeItem('your_db_username');
+  localStorage.removeItem('novel_username');
   localStorage.removeItem('novel_nickname');
   updateNavUserState();
 }

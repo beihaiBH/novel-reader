@@ -1,7 +1,7 @@
 -- =====================================================================
 --  小说在线阅读平台 · 数据库安装脚本  (install.sql)
 --  Online Novel Reading Platform - Database Schema
---  Version: 2.0
+--  Version: 3.0
 --  字符集: utf8mb4
 --
 --  用法：

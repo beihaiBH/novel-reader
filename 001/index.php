@@ -49,12 +49,12 @@ $chapterReadMinutes = max(1, (int)ceil($chapterWordCount / 500));
 <meta name="description" content="《我在追捕我自己》是作者GORE创作的悬疑推理小说。审讯室的灯光、外卖员鞋底的泥土、被盖上的毛毯……一个关于犯罪与梦境的悬疑故事。在线阅读最新章节，支持语音朗读和评论区互动。">
 <meta name="keywords" content="我在追捕我自己,悬疑小说,推理小说,GORE,犯罪小说,在线阅读,免费阅读">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://novel.lgnb.asia/001/">
+<link rel="canonical" href="https://{DOMAIN}/001/">
 <meta property="og:title" content="我在追捕我自己 - GORE悬疑推理小说">
 <meta property="og:description" content="GORE 悬疑推理小说《我在追捕我自己》。审讯室的灯光下，一个关于犯罪与梦境的故事。在线阅读最新章节。">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://novel.lgnb.asia/001/">
-<meta property="og:image" content="https://novel.lgnb.asia/001/cover.jpg">
+<meta property="og:url" content="https://{DOMAIN}/001/">
+<meta property="og:image" content="https://{DOMAIN}/001/cover.jpg">
 <meta property="book:author" content="GORE">
 <meta property="book:tag" content="悬疑,推理,犯罪,小说">
 <meta name="twitter:card" content="summary_large_image">
@@ -72,7 +72,7 @@ $chapterReadMinutes = max(1, (int)ceil($chapterWordCount / 500));
   "alternateName": "GORE",
   "description": "审讯室的灯光闪了一下，夜神月坐在空椅子上……一个关于犯罪与梦境、追捕与自我的悬疑推理故事。",
   "genre": ["悬疑", "推理", "犯罪"],
-  "url": "https://novel.lgnb.asia/001/",
+  "url": "https://{DOMAIN}/001/",
   "inLanguage": "zh-CN",
   "bookFormat": "http://schema.org/EBook",
   "numberOfPages": 3,
@@ -80,9 +80,9 @@ $chapterReadMinutes = max(1, (int)ceil($chapterWordCount / 500));
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://lgnb.asia/"},
-      {"@type": "ListItem", "position": 2, "name": "小说书架", "item": "https://novel.lgnb.asia/"},
-      {"@type": "ListItem", "position": 3, "name": "我在追捕我自己", "item": "https://novel.lgnb.asia/001/"}
+      {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://{DOMAIN}/"},
+      {"@type": "ListItem", "position": 2, "name": "小说书架", "item": "https://{DOMAIN}/"},
+      {"@type": "ListItem", "position": 3, "name": "我在追捕我自己", "item": "https://{DOMAIN}/001/"}
     ]
   }
 }
@@ -90,12 +90,12 @@ $chapterReadMinutes = max(1, (int)ceil($chapterWordCount / 500));
 <!-- 360搜索面包屑导航（对读者可见） -->
 <div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a href="https://lgnb.asia/" itemprop="item"><span itemprop="name">🏠 首页</span></a>
+    <a href="https://{DOMAIN}/" itemprop="item"><span itemprop="name">🏠 首页</span></a>
     <meta itemprop="position" content="1">
   </span>
   <span class="sep"> › </span>
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a href="https://novel.lgnb.asia/" itemprop="item"><span itemprop="name">📚 书架</span></a>
+    <a href="https://{DOMAIN}/" itemprop="item"><span itemprop="name">📚 书架</span></a>
     <meta itemprop="position" content="2">
   </span>
   <span class="sep"> › </span>
@@ -207,7 +207,7 @@ body {
     padding-bottom: 14px; border-bottom: 1px dashed #ddd5c8;
 }
 .content p {
-    text-indent: 2em; line-height: 2.05; font-size: 20px;
+    text-indent: 2em; line-height: 2.05; font-size: 22px;
     margin-bottom: 6px; letter-spacing: 0.8px;
     word-break: break-word; transition: color 0.3s;
 }
@@ -715,7 +715,7 @@ body {
 
 @media (max-width: 600px) {
     .container { padding: 20px 16px 40px; }
-    .content p { font-size: 16px; }
+    .content p { font-size: 18px; }
     .header h1 { font-size: 19px; }
     .float-actions { bottom: 24px; right: 14px; gap: 12px; }
     .float-btn { width: 46px; height: 46px; }
@@ -1237,7 +1237,7 @@ mark.hl-note::after{ content:'\1F4DD'; font-size:10px; vertical-align:super; mar
 </div>
 
 <div class="footer">
-    <p>🍃 <a href="https://novel.lgnb.asia/" style="color:#a08060;text-decoration:none;">我在追捕我自己</a> · GORE 作品</p>
+    <p>🍃 <a href="https://{DOMAIN}/" style="color:#a08060;text-decoration:none;">我在追捕我自己</a> · GORE 作品</p>
 </div>
 
 <!-- 版权信息 -->
@@ -1874,7 +1874,8 @@ function cancelReply() {
 // ====== 标签持久化 ======
 const NovelAPI = (() => {
     const host = window.location.hostname;
-    return (host === 'novel.lgnb.asia') ? '/api.php' : '/novel/api.php';
+    // 部署在同一域名下用 /api.php；子目录部署改为 /novel/api.php
+    return (host === '{DOMAIN}') ? '/api.php' : '/novel/api.php';
 })();
 
 // 加载用户标签历史并渲染提示
@@ -2414,22 +2415,44 @@ let ttsIsPlaying = false;
 let ttsTimer = null;
 let ttsStartTime = 0;
 let ttsAudio = null;
+let ttsNextAudio = null;  // 预加载的下一段音频
 let ttsLoading = false;
 
 function toggleTts() {
     const panel = document.getElementById('ttsPlayer');
     const paras = document.querySelectorAll('.content p');
     ttsSentences = [];
+    
+    // 收集所有纯文本段落
+    const rawTexts = [];
     paras.forEach(p => {
         const txt = p.textContent.trim();
         if (txt && !p.classList.contains('chapter-line') && !p.classList.contains('empty')) {
-            const parts = txt.split(/(?<=[。！？.!?，,])/);
-            parts.forEach(s => {
-                const st = s.trim();
-                if (st.length > 0) ttsSentences.push(st);
-            });
+            rawTexts.push(txt);
         }
     });
+    
+    // 按完整句子拆分（逗号不拆！），再合并成 80~150 字的 chunk
+    const allSentences = [];
+    rawTexts.forEach(txt => {
+        const parts = txt.split(/(?<=[。！？.!?])/);
+        parts.forEach(s => {
+            const st = s.trim();
+            if (st.length > 0) allSentences.push(st);
+        });
+    });
+    
+    // 合并成更大的 chunk，减少 TTS 请求次数
+    let currentChunk = '';
+    allSentences.forEach(s => {
+        if (currentChunk.length + s.length > 150 && currentChunk.length > 0) {
+            ttsSentences.push(currentChunk);
+            currentChunk = s;
+        } else {
+            currentChunk += s;
+        }
+    });
+    if (currentChunk.length > 0) ttsSentences.push(currentChunk);
     
     if (ttsSentences.length === 0) {
         showToast('当前章节没有可朗读的内容~');
@@ -2440,18 +2463,86 @@ function toggleTts() {
         ttsStop();
     } else {
         panel.classList.add('show');
-        document.getElementById('ttsLabel').textContent = '🔊 ' + ttsSentences.length + '句';
+        document.getElementById('ttsLabel').textContent = '🔊 ' + ttsSentences.length + '段';
         document.getElementById('ttsStatus').textContent = '♪';
         ttsCurrentIdx = 0;
         ttsStartTime = Date.now();
         updateProgress();
-        // 预加载+播放第一句
         preloadAndPlay();
     }
 }
 
+// ---- 加载一段音频（fetch + blob） ----
+function loadAudio(text, callback) {
+    const form = new FormData();
+    form.append('text', text);
+    fetch('/tts.php', { method: 'POST', body: form })
+        .then(r => {
+            if (!r.ok) throw new Error('TTS Failed');
+            return r.blob();
+        })
+        .then(blob => {
+            const url = URL.createObjectURL(blob);
+            const audio = new Audio(url);
+            audio._text = text;
+            audio._url = url;
+            audio.preload = 'auto';
+            callback(audio);
+        })
+        .catch(() => callback(null));
+}
+
+// ---- 播放音频（自动清理旧音频） ----
+function playAudio(audio) {
+    if (ttsAudio) {
+        ttsAudio.pause();
+        if (ttsAudio._url) URL.revokeObjectURL(ttsAudio._url);
+        ttsAudio = null;
+    }
+    
+    ttsAudio = audio;
+    ttsIsPlaying = true;
+    document.getElementById('ttsPlayIcon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+    document.getElementById('ttsPlayBtn').classList.add('pulse');
+    document.getElementById('ttsLabel').textContent = '🔊 ' + (ttsCurrentIdx+1) + '/' + ttsSentences.length;
+    document.getElementById('ttsStatus').textContent = '♪';
+    
+    audio.play().catch(() => {
+        ttsCurrentIdx++;
+        ttsIsPlaying = false;
+        document.getElementById('ttsPlayBtn').classList.remove('pulse');
+        setTimeout(preloadAndPlay, 200);
+    });
+    
+    audio.onended = () => {
+        ttsIsPlaying = false;
+        document.getElementById('ttsPlayBtn').classList.remove('pulse');
+        URL.revokeObjectURL(audio._url);
+        ttsCurrentIdx++;
+        setTimeout(preloadAndPlay, 300);
+    };
+    
+    audio.onerror = () => {
+        ttsIsPlaying = false;
+        document.getElementById('ttsPlayBtn').classList.remove('pulse');
+        URL.revokeObjectURL(audio._url);
+        ttsCurrentIdx++;
+        setTimeout(preloadAndPlay, 200);
+    };
+}
+
+// ---- 预加载下一段 ----
+function preloadNext() {
+    const nidx = ttsCurrentIdx + 1;
+    if (nidx >= ttsSentences.length) return;
+    const text = ttsSentences[nidx];
+    if (!text.trim()) return;
+    loadAudio(text, function(audio) {
+        if (audio) ttsNextAudio = audio;
+    });
+}
+
 function preloadAndPlay() {
-    // 防止重复加载导致重音
     if (ttsLoading) return;
     if (ttsIsPlaying) return;
     if (ttsCurrentIdx >= ttsSentences.length) {
@@ -2467,73 +2558,29 @@ function preloadAndPlay() {
         return;
     }
     
+    // 用预加载好的音频直接播放
+    if (ttsNextAudio && ttsNextAudio._text === text) {
+        const a = ttsNextAudio;
+        ttsNextAudio = null;
+        playAudio(a);
+        preloadNext();
+        return;
+    }
+    
     ttsLoading = true;
     document.getElementById('ttsLabel').textContent = '🔊 加载中 ' + (ttsCurrentIdx+1) + '/' + ttsSentences.length;
     
-    const form = new FormData();
-    form.append('text', text);
-    
-    fetch('/tts.php', { method: 'POST', body: form })
-        .then(r => {
-            if (!r.ok) throw new Error('TTS Failed');
-            return r.blob();
-        })
-        .then(blob => {
-            // 先停止之前的音频
-            if (ttsAudio) {
-                ttsAudio.pause();
-                ttsAudio.src = '';
-                ttsAudio = null;
-            }
-            const url = URL.createObjectURL(blob);
-            const audio = new Audio(url);
-            ttsAudio = audio;
-            ttsLoading = false;
-            
-            let played = false;
-            audio.oncanplaythrough = () => {
-                if (played) return;
-                played = true;
-                ttsIsPlaying = true;
-                document.getElementById('ttsPlayIcon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-                document.getElementById('ttsPlayBtn').classList.add('pulse');
-                document.getElementById('ttsLabel').textContent = '🔊 ' + (ttsCurrentIdx+1) + '/' + ttsSentences.length;
-                document.getElementById('ttsStatus').textContent = '♪';
-                audio.play().catch(() => {
-                    ttsCurrentIdx++;
-                    URL.revokeObjectURL(url);
-                    ttsIsPlaying = false;
-                    setTimeout(preloadAndPlay, 200);
-                });
-            };
-            
-            audio.onended = () => {
-                if (!played) return;
-                played = false;
-                ttsIsPlaying = false;
-                document.getElementById('ttsPlayBtn').classList.remove('pulse');
-                URL.revokeObjectURL(url);
-                ttsCurrentIdx++;
-                setTimeout(preloadAndPlay, 300);
-            };
-            
-            audio.onerror = () => {
-                if (!played && ttsLoading) {
-                    ttsLoading = false;
-                }
-                ttsIsPlaying = false;
-                document.getElementById('ttsPlayBtn').classList.remove('pulse');
-                URL.revokeObjectURL(url);
-                ttsCurrentIdx++;
-                setTimeout(preloadAndPlay, 200);
-            };
-        })
-        .catch(e => {
-            ttsLoading = false;
+    loadAudio(text, function(audio) {
+        ttsLoading = false;
+        if (!audio) {
             showToast('语音加载失败，跳过~');
             ttsCurrentIdx++;
             setTimeout(preloadAndPlay, 200);
-        });
+            return;
+        }
+        playAudio(audio);
+        preloadNext();
+    });
     
     updateProgress();
 }
@@ -2561,7 +2608,8 @@ function ttsPlayPause() {
 }
 
 function ttsNext() {
-    if (ttsAudio) { ttsAudio.pause(); ttsAudio = null; }
+    if (ttsNextAudio) { if (ttsNextAudio._url) URL.revokeObjectURL(ttsNextAudio._url); ttsNextAudio = null; }
+    if (ttsAudio) { ttsAudio.pause(); if (ttsAudio._url) URL.revokeObjectURL(ttsAudio._url); ttsAudio = null; }
     ttsIsPlaying = false;
     document.getElementById('ttsPlayBtn').classList.remove('pulse');
     if (ttsCurrentIdx < ttsSentences.length - 1) {
@@ -2571,7 +2619,8 @@ function ttsNext() {
 }
 
 function ttsPrev() {
-    if (ttsAudio) { ttsAudio.pause(); ttsAudio = null; }
+    if (ttsNextAudio) { if (ttsNextAudio._url) URL.revokeObjectURL(ttsNextAudio._url); ttsNextAudio = null; }
+    if (ttsAudio) { ttsAudio.pause(); if (ttsAudio._url) URL.revokeObjectURL(ttsAudio._url); ttsAudio = null; }
     ttsIsPlaying = false;
     document.getElementById('ttsPlayBtn').classList.remove('pulse');
     if (ttsCurrentIdx > 0) {
@@ -2581,7 +2630,8 @@ function ttsPrev() {
 }
 
 function ttsStop() {
-    if (ttsAudio) { ttsAudio.pause(); ttsAudio = null; }
+    if (ttsNextAudio) { if (ttsNextAudio._url) URL.revokeObjectURL(ttsNextAudio._url); ttsNextAudio = null; }
+    if (ttsAudio) { ttsAudio.pause(); if (ttsAudio._url) URL.revokeObjectURL(ttsAudio._url); ttsAudio = null; }
     ttsIsPlaying = false;
     document.getElementById('ttsPlayBtn').classList.remove('pulse');
     document.getElementById('ttsPlayIcon').innerHTML = '<path d="M8 5v14l11-7z"/>';
@@ -2628,7 +2678,7 @@ window.addEventListener('beforeunload', () => {
     <label class="s-label">📝 字体大小</label>
     <div class="font-size-control">
       <span class="size-label">A</span>
-      <input type="range" id="fontSizeSlider" min="15" max="25" step="1" value="20" oninput="changeFontSize(this.value)">
+      <input type="range" id="fontSizeSlider" min="15" max="28" step="1" value="22" oninput="changeFontSize(this.value)">
       <span class="size-label" style="font-size:16px;font-weight:700;">A</span>
     </div>
   </div>
@@ -2699,7 +2749,7 @@ function openSettings() {
   document.body.style.overflow = 'hidden';
   
   // 恢复已保存设置
-  const fontSize = localStorage.getItem('readerFontSize') || '20';
+  const fontSize = localStorage.getItem('readerFontSize') || '22';
   document.getElementById('fontSizeSlider').value = fontSize;
   
   const theme = localStorage.getItem('readerTheme') || 'light';
@@ -2773,7 +2823,7 @@ function saveEmail(val) {
 // ====== 同步所有设置到服务器 ======
 function syncSettings() {
   const s = {
-    fontSize: localStorage.getItem('readerFontSize') || '20',
+    fontSize: localStorage.getItem('readerFontSize') || '22',
     theme: localStorage.getItem('readerTheme') || 'light',
     notif: localStorage.getItem('readerNotif') === 'on',
     email: localStorage.getItem('readerEmail') || ''
@@ -2954,15 +3004,22 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
   // ---- API 通信 ----
   function api(method, data, cb){
     var xhr=new XMLHttpRequest();
-    xhr.open(method || 'GET', API, true);
-    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    var isGet=(method||'GET').toUpperCase()==='GET';
+    var qs=[]; for(var k in data){ qs.push(encodeURIComponent(k)+'='+encodeURIComponent(data[k])); }
+    qs=qs.join('&');
+    if(isGet){
+      xhr.open('GET', API+'?'+qs, true);
+      xhr.send();
+    } else {
+      xhr.open(method||'POST', API, true);
+      xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+      xhr.send(qs);
+    }
     xhr.onload=function(){
       try{ cb(JSON.parse(xhr.responseText)); }
       catch(e){ cb(null); }
     };
     xhr.onerror=function(){ cb(null); };
-    var arr=[]; for(var k in data){ arr.push(encodeURIComponent(k)+'='+encodeURIComponent(data[k])); }
-    xhr.send(arr.join('&'));
   }
 
   // ---- 加载笔记（优先 API，降级 localStorage） ----
