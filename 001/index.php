@@ -2980,11 +2980,32 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
     pendingText=sel.toString();
     var rect=sel.getRangeAt(0).getBoundingClientRect();
     bar.style.display='block';
-    bar.style.top=(window.scrollY+rect.bottom+10)+'px';
-    bar.style.left=(window.scrollX+rect.left+rect.width/2-46)+'px';
+    // 区别于原生选择工具栏（通常在底部），将按钮放在选区下方
+    // 在移动端避免与底部原生复制按钮重叠
+    var viewBottom=window.innerHeight-30;
+    var btnTop=window.scrollY+rect.bottom+8;
+    var btnLeft=window.scrollX+rect.left+rect.width/2-46;
+    // 如果按钮位置接近视口底部（可能被原生工具栏遮挡），上移
+    if(btnTop-window.scrollY+40 > viewBottom-60){
+      btnTop=window.scrollY+rect.top-40;
+    }
+    bar.style.top=btnTop+'px';
+    bar.style.left=btnLeft+'px';
   });
+  // 捕获点击/触摸事件（同时兼容鼠标和移动端）
+  var _active=false;
+  function _openNote(){
+    if(_active) return; _active=true;
+    var sel=document.getSelection();
+    var t=(sel && !sel.isCollapsed && contentEl.contains(sel.anchorNode||sel.focusNode))
+      ? sel.toString() : pendingText;
+    hideBar(); openCreate(t);
+    setTimeout(function(){ _active=false; }, 500);
+  }
+  bar.addEventListener('touchstart', function(e){ e.preventDefault(); }, {passive:false});
+  bar.addEventListener('touchend', function(e){ e.preventDefault(); _openNote(); }, {passive:false});
   bar.addEventListener('mousedown', function(e){ e.preventDefault(); });
-  bar.addEventListener('click', function(){ var t=pendingText; hideBar(); openCreate(t); });
+  bar.addEventListener('click', _openNote);
   function modal(html){
     var mask=document.createElement('div'); mask.className='hl-modal-mask';
     mask.innerHTML='<div class="hl-modal">'+html+'</div>';
