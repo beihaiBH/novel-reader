@@ -183,6 +183,21 @@ CREATE TABLE `logs` (
   KEY `idx_logs_action` (`action`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- ---- 阅读笔记（登录用户永久保存高亮笔记）----
+CREATE TABLE IF NOT EXISTS `reading_notes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `novel_id` varchar(10) NOT NULL,
+  `chapter` int NOT NULL,
+  `text_content` text NOT NULL,
+  `note` text,
+  `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `novel_chapter` (`novel_id`, `chapter`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- ---------------------------------------------------------------------
 -- 默认管理员账号
 --   用户名: admin

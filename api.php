@@ -873,6 +873,72 @@ switch ($action) {
         jsonResponse(['code' => 0, 'data' => $logs, 'total' => $total, 'page' => $page, 'limit' => $limit]);
         break;
 
+    // ---- 阅读笔记（数据库永久保存）----
+    case 'add_note':
+        $token = $jsonBody['token'] ?? $_POST['token'] ?? '';
+        $novel_id = $jsonBody['novel_id'] ?? $_POST['novel_id'] ?? '';
+        $chapter = (int)($jsonBody['chapter'] ?? $_POST['chapter'] ?? 0);
+        $text = $jsonBody['text'] ?? $_POST['text'] ?? '';
+        $note = $jsonBody['note'] ?? $_POST['note'] ?? '';
+        if (!$token) { jsonResponse(['code' => -1, 'msg' => '未登录']); break; }
+        if (!$novel_id || !$text) { jsonResponse(['code' => -1, 'msg' => '参数不足']); break; }
+        $stmt = $pdo->prepare('SELECT id FROM users WHERE token = ?');
+        $stmt->execute([$token]);
+        $user = $stmt->fetch();
+        if (!$user) { jsonResponse(['code' => -1, 'msg' => '用户不存在']); break; }
+        $stmt = $pdo->prepare('INSERT INTO reading_notes (user_id, novel_id, chapter, text_content, note) VALUES (?,?,?,?,?)');
+        $stmt->execute([$user['id'], $novel_id, $chapter, $text, $note]);
+        jsonResponse(['code' => 0, 'msg' => '保存成功', 'id' => (int)$pdo->lastInsertId()]);
+        break;
+
+    case 'get_notes':
+        $token = $_GET['token'] ?? '';
+        $novel_id = $_GET['novel_id'] ?? '';
+        $chapter = (int)($_GET['chapter'] ?? 0);
+        if (!$token) { jsonResponse(['code' => -1, 'msg' => '未登录']); break; }
+        $stmt = $pdo->prepare('SELECT id FROM users WHERE token = ?');
+        $stmt->execute([$token]);
+        $user = $stmt->fetch();
+        if (!$user) { jsonResponse(['code' => -1, 'msg' => '用户不存在']); break; }
+        $sql = 'SELECT id, novel_id, chapter, text_content, note, created_at FROM reading_notes WHERE user_id = ? AND novel_id = ?';
+        $params = [$user['id'], $novel_id];
+        if ($chapter > 0) {
+            $sql .= ' AND chapter = ?';
+            $params[] = $chapter;
+        }
+        $sql .= ' ORDER BY created_at DESC';
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        jsonResponse(['code' => 0, 'data' => $stmt->fetchAll()]);
+        break;
+
+    case 'update_note':
+        $token = $jsonBody['token'] ?? $_POST['token'] ?? '';
+        $id = (int)($jsonBody['id'] ?? $_POST['id'] ?? 0);
+        $note = $jsonBody['note'] ?? $_POST['note'] ?? '';
+        if (!$token || !$id) { jsonResponse(['code' => -1, 'msg' => '参数不足']); break; }
+        $stmt = $pdo->prepare('SELECT id FROM users WHERE token = ?');
+        $stmt->execute([$token]);
+        $user = $stmt->fetch();
+        if (!$user) { jsonResponse(['code' => -1, 'msg' => '用户不存在']); break; }
+        $stmt = $pdo->prepare('UPDATE reading_notes SET note = ? WHERE id = ? AND user_id = ?');
+        $stmt->execute([$note, $id, $user['id']]);
+        jsonResponse(['code' => 0, 'msg' => '更新成功']);
+        break;
+
+    case 'delete_note':
+        $token = $jsonBody['token'] ?? $_POST['token'] ?? '';
+        $id = (int)($jsonBody['id'] ?? $_POST['id'] ?? 0);
+        if (!$token || !$id) { jsonResponse(['code' => -1, 'msg' => '参数不足']); break; }
+        $stmt = $pdo->prepare('SELECT id FROM users WHERE token = ?');
+        $stmt->execute([$token]);
+        $user = $stmt->fetch();
+        if (!$user) { jsonResponse(['code' => -1, 'msg' => '用户不存在']); break; }
+        $stmt = $pdo->prepare('DELETE FROM reading_notes WHERE id = ? AND user_id = ?');
+        $stmt->execute([$id, $user['id']]);
+        jsonResponse(['code' => 0, 'msg' => '删除成功']);
+        break;
+
     default:
         echo json_encode(['code' => -1, 'msg' => 'unknown action']);
         break;

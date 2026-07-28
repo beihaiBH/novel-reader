@@ -2936,16 +2936,105 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
   setTimeout(updateProgress, 100);
 })();
 
-/* ====== 本地化段落高亮笔记（LocalStorage，无需登录/数据库） ====== */
+</script>
+/* ====== 段落高亮笔记（数据库永久保存，登录用户可跨设备同步） ====== */
 (function(){
   var NID='001', CH=<?= (int)$activeChapter ?>;
   var KEY='novel_notes_'+NID+'_'+CH;
+  var API='/api.php';
+  var TOKEN=localStorage.getItem('novel_token')||'';
   var contentEl=document.querySelector('.content');
   if(!contentEl) return;
-  function load(){ try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return [];} }
-  function save(a){ try{localStorage.setItem(KEY, JSON.stringify(a));}catch(e){} }
+
+  // ---- 本地缓存（localStorage 降级方案） ----
+  function loadLocal(){ try{return JSON.parse(localStorage.getItem(KEY)||'[]');}catch(e){return [];} }
+  function saveLocal(a){ try{localStorage.setItem(KEY, JSON.stringify(a));}catch(e){} }
+
+  // ---- API 通信 ----
+  function api(method, data, cb){
+    var xhr=new XMLHttpRequest();
+    xhr.open(method || 'GET', API, true);
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xhr.onload=function(){
+      try{ cb(JSON.parse(xhr.responseText)); }
+      catch(e){ cb(null); }
+    };
+    xhr.onerror=function(){ cb(null); };
+    var arr=[]; for(var k in data){ arr.push(encodeURIComponent(k)+'='+encodeURIComponent(data[k])); }
+    xhr.send(arr.join('&'));
+  }
+
+  // ---- 加载笔记（优先 API，降级 localStorage） ----
+  function loadAll(cb){
+    if(TOKEN){
+      api('GET',{action:'get_notes',token:TOKEN,novel_id:NID,chapter:CH},function(res){
+        if(res && res.code===0 && res.data){
+          // 同步到 localStorage 作为缓存
+          var arr=[];
+          for(var i=0;i<res.data.length;i++){
+            arr.push({text:res.data[i].text_content, note:res.data[i].note||'', id:res.data[i].id});
+          }
+          saveLocal(arr);
+          cb(arr);
+        } else {
+          cb(loadLocal());
+        }
+      });
+    } else {
+      cb(loadLocal());
+    }
+  }
+
+  // ---- 保存笔记 ----
+  function saveNote(text, note, dbId, cb){
+    if(TOKEN){
+      var act=dbId ? 'update_note' : 'add_note';
+      api('POST',{action:act,token:TOKEN,novel_id:NID,chapter:CH,text:text,note:note,id:dbId||''},function(res){
+        if(res && res.code===0){
+          // 更新本地缓存
+          var a=loadLocal();
+          if(dbId){
+            for(var i=0;i<a.length;i++){ if(a[i].id===dbId){ a[i].note=note; break; } }
+          } else {
+            a.push({text:text,note:note,ts:Date.now(),id:res.id});
+          }
+          saveLocal(a);
+          if(cb) cb(res.id);
+        } else {
+          // API 失败，降级到 localStorage
+          var a=loadLocal();
+          if(!dbId) a.push({text:text,note:note,ts:Date.now()});
+          saveLocal(a);
+          if(cb) cb(null);
+        }
+      });
+    } else {
+      var a=loadLocal();
+      if(!dbId) a.push({text:text,note:note,ts:Date.now()});
+      saveLocal(a);
+      if(cb) cb(null);
+    }
+  }
+
+  // ---- 删除笔记 ----
+  function deleteNote(text, dbId, cb){
+    if(TOKEN && dbId){
+      api('POST',{action:'delete_note',token:TOKEN,id:dbId},function(res){
+        // 无论成功与否都更新本地
+        var a=loadLocal().filter(function(x){ return x.text!==text; });
+        saveLocal(a);
+        if(cb) cb();
+      });
+    } else {
+      var a=loadLocal().filter(function(x){ return x.text!==text; });
+      saveLocal(a);
+      if(cb) cb();
+    }
+  }
+
   function escLocal(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
-  function highlightText(text, note){
+
+  function highlightText(text, note, dbId){
     if(!text) return false;
     var walker=document.createTreeWalker(contentEl, NodeFilter.SHOW_TEXT, null);
     var node;
@@ -2957,7 +3046,9 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
         var range=document.createRange();
         range.setStart(node, idx); range.setEnd(node, idx+text.length);
         var mark=document.createElement('mark');
-        mark.className='hl-note'; mark.setAttribute('data-note', note||''); mark.title=note||'点击查看笔记';
+        mark.className='hl-note'; mark.setAttribute('data-note', note||'');
+        mark.setAttribute('data-dbid', dbId||'');
+        mark.title=note||'点击查看笔记';
         try{ range.surroundContents(mark);}catch(e){ return false; }
         mark.addEventListener('click', function(e){ e.stopPropagation(); openEdit(this); });
         return true;
@@ -2965,11 +3056,21 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
     }
     return false;
   }
-  function applyAll(){ load().forEach(function(n){ highlightText(n.text, n.note); }); }
+
+  function applyAll(){
+    loadAll(function(notes){
+      for(var i=0;i<notes.length;i++){
+        highlightText(notes[i].text, notes[i].note, notes[i].id);
+      }
+    });
+  }
+
+  // ---- 添加笔记按钮 ----
   var bar=document.createElement('div'); bar.id='hlNoteBar'; bar.textContent='📝 添加笔记';
   document.body.appendChild(bar);
   var pendingText='';
   function hideBar(){ bar.style.display='none'; }
+
   document.addEventListener('selectionchange', function(){
     var sel=document.getSelection();
     if(!sel || sel.isCollapsed){ hideBar(); return; }
@@ -2980,19 +3081,16 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
     pendingText=sel.toString();
     var rect=sel.getRangeAt(0).getBoundingClientRect();
     bar.style.display='block';
-    // 区别于原生选择工具栏（通常在底部），将按钮放在选区下方
-    // 在移动端避免与底部原生复制按钮重叠
     var viewBottom=window.innerHeight-30;
     var btnTop=window.scrollY+rect.bottom+8;
     var btnLeft=window.scrollX+rect.left+rect.width/2-46;
-    // 如果按钮位置接近视口底部（可能被原生工具栏遮挡），上移
     if(btnTop-window.scrollY+40 > viewBottom-60){
       btnTop=window.scrollY+rect.top-40;
     }
     bar.style.top=btnTop+'px';
     bar.style.left=btnLeft+'px';
   });
-  // 捕获点击/触摸事件（同时兼容鼠标和移动端）
+
   var _active=false;
   function _openNote(){
     if(_active) return; _active=true;
@@ -3006,12 +3104,14 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
   bar.addEventListener('touchend', function(e){ e.preventDefault(); _openNote(); }, {passive:false});
   bar.addEventListener('mousedown', function(e){ e.preventDefault(); });
   bar.addEventListener('click', _openNote);
+
   function modal(html){
     var mask=document.createElement('div'); mask.className='hl-modal-mask';
     mask.innerHTML='<div class="hl-modal">'+html+'</div>';
     mask.addEventListener('click', function(e){ if(e.target===mask) document.body.removeChild(mask); });
     document.body.appendChild(mask); return mask;
   }
+
   function openCreate(text){
     var t=(text||'').replace(/\s+$/,'');
     var m=modal('<h4>📝 添加笔记</h4><div class="hl-quote">'+escLocal(t)+'</div><textarea id="hlTa" placeholder="写下你的想法（可留空仅高亮）"></textarea><div class="hl-actions"><button class="hl-cancel">取消</button><button class="hl-save">保存</button></div>');
@@ -3019,31 +3119,42 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
     m.querySelector('.hl-save').onclick=function(){
       var note=m.querySelector('#hlTa').value.trim();
       var ok=highlightText(t, note);
-      if(ok){ var a=load(); a.push({text:t, note:note, ts:Date.now()}); save(a); if(window.appToast) appToast('\u2705 已保存笔记'); }
-      else { if(window.appToast) appToast('\u274C 高亮失败，请重选文字'); }
+      if(ok){
+        saveNote(t, note, 0, function(){
+          if(window.appToast) appToast('✅ 已保存笔记');
+        });
+      } else {
+        if(window.appToast) appToast('❌ 高亮失败，请重选文字');
+      }
       document.body.removeChild(m);
       var s=document.getSelection(); if(s) s.removeAllRanges();
     };
   }
+
   function openEdit(mark){
-    var text=mark.textContent, note=mark.getAttribute('data-note')||'';
+    var text=mark.textContent, note=mark.getAttribute('data-note')||'', dbId=mark.getAttribute('data-dbid')||'';
     var m=modal('<h4>📝 我的笔记</h4><div class="hl-quote">'+escLocal(text)+'</div><textarea id="hlTa">'+escLocal(note)+'</textarea><div class="hl-actions"><button class="hl-del">删除</button><button class="hl-cancel">关闭</button><button class="hl-save">更新</button></div>');
     m.querySelector('.hl-cancel').onclick=function(){ document.body.removeChild(m); };
     m.querySelector('.hl-save').onclick=function(){
       var note2=m.querySelector('#hlTa').value.trim();
       mark.setAttribute('data-note', note2); mark.title=note2||'点击查看笔记';
-      var a=load(); for(var i=0;i<a.length;i++){ if(a[i].text===text){ a[i].note=note2; break; } } save(a);
+      // 更新数据库 + 本地
+      saveNote(text, note2, parseInt(dbId)||0);
       document.body.removeChild(m);
     };
     m.querySelector('.hl-del').onclick=function(){
-      var a=load().filter(function(x){ return x.text!==text; }); save(a);
-      var parent=mark.parentNode; while(mark.firstChild) parent.insertBefore(mark.firstChild, mark); parent.removeChild(mark); parent.normalize();
-      document.body.removeChild(m);
+      deleteNote(text, parseInt(dbId)||0, function(){
+        var parent=mark.parentNode;
+        while(mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+        parent.removeChild(mark); parent.normalize();
+        document.body.removeChild(m);
+        if(window.appToast) appToast('🗑️ 已删除笔记');
+      });
     };
   }
+
   if(document.readyState!=='loading') applyAll();
   else document.addEventListener('DOMContentLoaded', applyAll);
 })();
-</script>
 </body>
 </html>
