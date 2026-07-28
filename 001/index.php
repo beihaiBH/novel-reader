@@ -1,6 +1,6 @@
 <?php
 $NOVEL_ID = '001';
-$file = __DIR__ . '/sample.txt';
+$file = __DIR__ . '/《我在追捕我自己》作者GORE.txt';
 $content = file_get_contents($file);
 $lines = explode("\n", $content);
 
@@ -45,34 +45,34 @@ $chapterReadMinutes = max(1, (int)ceil($chapterWordCount / 500));
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>示例小说 - 佚名 悬疑推理小说 | 在线阅读</title>
-<meta name="description" content="《示例小说》是作者佚名创作的悬疑推理小说。审讯室的灯光、外卖员鞋底的泥土、被盖上的毛毯……一个关于犯罪与梦境的悬疑故事。在线阅读最新章节，支持语音朗读和评论区互动。">
-<meta name="keywords" content="示例小说,悬疑小说,推理小说,佚名,犯罪小说,在线阅读,免费阅读">
+<title>我在追捕我自己 - GORE 悬疑推理小说 | 在线阅读</title>
+<meta name="description" content="《我在追捕我自己》是作者GORE创作的悬疑推理小说。审讯室的灯光、外卖员鞋底的泥土、被盖上的毛毯……一个关于犯罪与梦境的悬疑故事。在线阅读最新章节，支持语音朗读和评论区互动。">
+<meta name="keywords" content="我在追捕我自己,悬疑小说,推理小说,GORE,犯罪小说,在线阅读,免费阅读">
 <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://example.com/001/">
-<meta property="og:title" content="示例小说 - 佚名悬疑推理小说">
-<meta property="og:description" content="佚名 悬疑推理小说《示例小说》。审讯室的灯光下，一个关于犯罪与梦境的故事。在线阅读最新章节。">
+<link rel="canonical" href="https://novel.lgnb.asia/001/">
+<meta property="og:title" content="我在追捕我自己 - GORE悬疑推理小说">
+<meta property="og:description" content="GORE 悬疑推理小说《我在追捕我自己》。审讯室的灯光下，一个关于犯罪与梦境的故事。在线阅读最新章节。">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://example.com/001/">
-<meta property="og:image" content="https://example.com/001/cover.jpg">
-<meta property="book:author" content="佚名">
+<meta property="og:url" content="https://novel.lgnb.asia/001/">
+<meta property="og:image" content="https://novel.lgnb.asia/001/cover.jpg">
+<meta property="book:author" content="GORE">
 <meta property="book:tag" content="悬疑,推理,犯罪,小说">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="示例小说 - 佚名悬疑推理小说">
-<meta name="twitter:description" content="佚名悬疑推理小说《示例小说》。在线阅读最新章节。">
+<meta name="twitter:title" content="我在追捕我自己 - GORE悬疑推理小说">
+<meta name="twitter:description" content="GORE悬疑推理小说《我在追捕我自己》。在线阅读最新章节。">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Book",
-  "name": "示例小说",
+  "name": "我在追捕我自己",
   "author": {
     "@type": "Person",
-    "name": "佚名"
+    "name": "GORE"
   },
-  "alternateName": "佚名",
+  "alternateName": "GORE",
   "description": "审讯室的灯光闪了一下，夜神月坐在空椅子上……一个关于犯罪与梦境、追捕与自我的悬疑推理故事。",
   "genre": ["悬疑", "推理", "犯罪"],
-  "url": "https://example.com/001/",
+  "url": "https://novel.lgnb.asia/001/",
   "inLanguage": "zh-CN",
   "bookFormat": "http://schema.org/EBook",
   "numberOfPages": 3,
@@ -80,9 +80,9 @@ $chapterReadMinutes = max(1, (int)ceil($chapterWordCount / 500));
   "breadcrumb": {
     "@type": "BreadcrumbList",
     "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://example.com/"},
-      {"@type": "ListItem", "position": 2, "name": "小说书架", "item": "https://example.com/"},
-      {"@type": "ListItem", "position": 3, "name": "示例小说", "item": "https://example.com/001/"}
+      {"@type": "ListItem", "position": 1, "name": "首页", "item": "https://lgnb.asia/"},
+      {"@type": "ListItem", "position": 2, "name": "小说书架", "item": "https://novel.lgnb.asia/"},
+      {"@type": "ListItem", "position": 3, "name": "我在追捕我自己", "item": "https://novel.lgnb.asia/001/"}
     ]
   }
 }
@@ -90,17 +90,17 @@ $chapterReadMinutes = max(1, (int)ceil($chapterWordCount / 500));
 <!-- 360搜索面包屑导航（对读者可见） -->
 <div class="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a href="https://example.com/" itemprop="item"><span itemprop="name">🏠 首页</span></a>
+    <a href="https://lgnb.asia/" itemprop="item"><span itemprop="name">🏠 首页</span></a>
     <meta itemprop="position" content="1">
   </span>
   <span class="sep"> › </span>
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <a href="https://example.com/" itemprop="item"><span itemprop="name">📚 书架</span></a>
+    <a href="https://novel.lgnb.asia/" itemprop="item"><span itemprop="name">📚 书架</span></a>
     <meta itemprop="position" content="2">
   </span>
   <span class="sep"> › </span>
   <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-    <span itemprop="name">📖 <?= htmlspecialchars($chapterTitle ?: '示例小说') ?></span>
+    <span itemprop="name">📖 <?= htmlspecialchars($chapterTitle ?: '我在追捕我自己') ?></span>
     <meta itemprop="position" content="3">
   </span>
   </span>
@@ -157,6 +157,21 @@ body {
 }
 .header h1 { font-size: 23px; font-weight: 700; letter-spacing: 4px; position: relative; }
 .header .author { font-size: 13px; color: #c4a882; margin-top: 8px; letter-spacing: 2px; position: relative; }
+
+/* ====== 阅读进度条 ====== */
+.reading-progress {
+    position: fixed; top: 0; left: 0; right: 0; height: 3px;
+    z-index: 10001; pointer-events: none;
+}
+.reading-progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #c4a882, #e6b422, #c4a882);
+    background-size: 200% 100%;
+    border-radius: 0 3px 3px 0;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 8px rgba(196,168,130,0.4);
+}
+
 .chapter-nav {
     background: rgba(255,255,255,0.95);
     backdrop-filter: blur(12px);
@@ -776,6 +791,11 @@ body {
 [data-theme="dark"] .emoji-tab:hover { background: var(--hover-bg) !important; }
 [data-theme="dark"] .emoji-grid img:hover { background: var(--hover-bg) !important; }
 [data-theme="dark"] .comment-tag { background: var(--badge-bg) !important; color: var(--badge-text) !important; }
+[data-theme="dark"] .reading-progress-fill {
+    background: linear-gradient(90deg, #8a7a60, #c4a060, #8a7a60) !important;
+    background-size: 200% 100% !important;
+    box-shadow: 0 0 8px rgba(196,160,96,0.3) !important;
+}
 
 </style>
 <!-- 搜索引擎主动推送 -->
@@ -1128,7 +1148,12 @@ body {
 mark.hl-note{ background:linear-gradient(180deg,transparent 55%,rgba(255,210,120,.65) 55%); cursor:pointer; padding:0 1px; border-radius:2px; }
 [data-theme="dark"] mark.hl-note{ background:linear-gradient(180deg,transparent 55%,rgba(200,150,60,.5) 55%); color:inherit; }
 mark.hl-note::after{ content:'\1F4DD'; font-size:10px; vertical-align:super; margin-left:1px; opacity:.7; }
-#hlNoteBar{ position:absolute; z-index:99998; display:none; background:#2c1810; color:#f0e6d3; border-radius:20px; padding:6px 14px; font-size:13px; box-shadow:0 4px 16px rgba(0,0,0,.3); cursor:pointer; white-space:nowrap; }
+#hlNoteBar{ position:absolute; z-index:99998; display:none; background:#2c1810; color:#f0e6d3; border-radius:20px; padding:7px 16px; font-size:13px; box-shadow:0 4px 16px rgba(0,0,0,.3); cursor:pointer; white-space:nowrap; user-select:none; transition:opacity .15s; }
+#hlNoteBar::before{ content:''; position:absolute; top:-6px; left:50%; margin-left:-5px; width:0; height:0; border-left:6px solid transparent; border-right:6px solid transparent; border-bottom:6px solid #2c1810; }
+#hlNoteBar:hover{ background:#3d2518; }
+#hlNoteBar:hover::before{ border-bottom-color:#3d2518; }
+[data-theme="dark"] #hlNoteBar{ background:#3a2a1a; }
+[data-theme="dark"] #hlNoteBar::before{ border-bottom-color:#3a2a1a; }
 .hl-modal-mask{ position:fixed; inset:0; background:rgba(0,0,0,.45); z-index:99999; display:flex; align-items:center; justify-content:center; }
 .hl-modal{ background:#fff; border-radius:16px; padding:18px; width:86%; max-width:360px; box-shadow:0 10px 40px rgba(0,0,0,.3); }
 [data-theme="dark"] .hl-modal{ background:#231a12; color:#e8ddd0; }
@@ -1146,9 +1171,14 @@ mark.hl-note::after{ content:'\1F4DD'; font-size:10px; vertical-align:super; mar
 </head>
 <body>
 
+<!-- ====== 阅读进度条 ====== -->
+<div class="reading-progress" id="readingProgress">
+    <div class="reading-progress-fill" id="readingProgressFill"></div>
+</div>
+
 <div class="header">
-    <h1>📖 示例小说</h1>
-    <div class="author">作者：佚名</div>
+    <h1>📖 我在追捕我自己</h1>
+    <div class="author">作者：GORE</div>
 </div>
 
 <div class="chapter-nav" id="chapterNav">
@@ -1207,14 +1237,15 @@ mark.hl-note::after{ content:'\1F4DD'; font-size:10px; vertical-align:super; mar
 </div>
 
 <div class="footer">
-    <p>🍃 <a href="https://example.com/" style="color:#a08060;text-decoration:none;">示例小说</a> · 佚名 作品</p>
+    <p>🍃 <a href="https://novel.lgnb.asia/" style="color:#a08060;text-decoration:none;">我在追捕我自己</a> · GORE 作品</p>
 </div>
 
 <!-- 版权信息 -->
 <div class="novel-footer">
   <div class="nf-copyright">
-    ©2026 佚名 保留本小说全部著作权，原作链接：<a href="https://www.dnforlife.com/?p=234299&preview=true" target="_blank" rel="noopener">https://www.dnforlife.com/?p=234299&preview=true</a><br>
-    未经作者书面许可禁止转载、复制、二次分发，侵权必究。
+    ©2026 GORE 保留本小说全部著作权，原作链接：<a href="https://www.dnforlife.com/?p=234299&preview=true" target="_blank" rel="noopener">https://www.dnforlife.com/?p=234299&preview=true</a><br>
+    未经作者书面许可禁止转载、复制、二次分发，侵权必究。<br>
+    我司已依法取得该作品完整合法的信息网络传播及公开转载授权，具备合规转载使用资质。
   </div>
   <div class="nf-tech">
     技术支持：天津海云互联网络科技有限公司<br>
@@ -1434,7 +1465,7 @@ function loadUserData() {
                     var u = d.data;
                     if (u.uuid) localStorage.setItem('novel_uuid', u.uuid);
                     if (u.avatar) localStorage.setItem('novel_avatar_url', u.avatar);
-                    if (u.nickname) localStorage.setItem('novel_nick_admin', u.nickname);
+                    if (u.nickname) localStorage.setItem('novel_nick_beihai', u.nickname);
                     if (u.bind_email) {
                       localStorage.setItem('readerEmail', u.bind_email);
                       localStorage.setItem('readerNotif', 'on');
@@ -1488,7 +1519,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 昵称
         if (data.nickname && !isAdmin) {
             document.getElementById('inputNickname').value = data.nickname;
-            localStorage.setItem('novel_nick_admin', data.nickname);
+            localStorage.setItem('novel_nick_beihai', data.nickname);
         }
         // 头像
         if (data.avatar) {
@@ -1551,7 +1582,7 @@ function checkAdmin() {
         .then(d => {
             if (d.code === 0 && d.is_admin) {
                 isAdmin = true;
-                document.getElementById('inputNickname').value = 'admin';
+                document.getElementById('inputNickname').value = 'beihai';
                 updateAvatarDisplay('b', null);
                 document.getElementById('inputBadge').style.display = 'flex';
                 saveNickname();
@@ -1716,7 +1747,7 @@ function loadComments() {
                 item.className = 'comment-item';
                 item.style.animationDelay = (idx * 0.04) + 's';
                 const avatarHtml = c.avatar ? `<img src="${c.avatar}" alt="头像">` : c.nickname.charAt(0);
-                const isBeihai = c.nickname === 'admin';
+                const isBeihai = c.nickname === 'beihai';
                 const isLiked = likedComments.has(c.id);
                 
                 // 提取标签
@@ -1777,7 +1808,7 @@ function loadComments() {
                         const rTagHtml = rTag ? `<span class="${rTagCls}">${rTagIcon}${escapeHtml(rTag)}</span>` : '';
                         const rTagBadges = [];
                         if (rTagHtml) rTagBadges.push(rTagHtml);
-                        if (r.nickname === 'admin') rTagBadges.push('<span class="comment-badge">👑 站长</span>');
+                        if (r.nickname === 'beihai') rTagBadges.push('<span class="comment-badge">👑 站长</span>');
                         if (r.user_tags) {
                           r.user_tags.split(',').forEach(function(t) {
                             t = t.trim();
@@ -1843,7 +1874,7 @@ function cancelReply() {
 // ====== 标签持久化 ======
 const NovelAPI = (() => {
     const host = window.location.hostname;
-    return (host === 'example.com') ? '/api.php' : '/novel/api.php';
+    return (host === 'novel.lgnb.asia') ? '/api.php' : '/novel/api.php';
 })();
 
 // 加载用户标签历史并渲染提示
@@ -2089,7 +2120,7 @@ function toggleGlobalLike() {
 
 // ====== 昵称存储 ======
 function loadNickname() {
-    const saved = localStorage.getItem('novel_nick_admin');
+    const saved = localStorage.getItem('novel_nick_beihai');
     if (saved && !isAdmin) {
         document.getElementById('inputNickname').value = saved;
         updateAvatarDisplay(saved.charAt(0), null);
@@ -2098,7 +2129,7 @@ function loadNickname() {
 function saveNickname() {
     const val = document.getElementById('inputNickname').value.trim();
     if (val) {
-        localStorage.setItem('novel_nick_admin', val);
+        localStorage.setItem('novel_nick_beihai', val);
         syncUserData({nickname: val});
     }
 }
@@ -2890,6 +2921,21 @@ localStorage.setItem('lastReading', '/001/');
 try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
 </script>
 <script>
+/* ====== 阅读进度条 ====== */
+(function(){
+  var fill=document.getElementById('readingProgressFill');
+  if(!fill) return;
+  function updateProgress(){
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    if(h<=0){ fill.style.width='0%'; return; }
+    var p=Math.min(window.scrollY/h*100, 100);
+    fill.style.width=p+'%';
+  }
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  window.addEventListener('resize', updateProgress);
+  setTimeout(updateProgress, 100);
+})();
+
 /* ====== 本地化段落高亮笔记（LocalStorage，无需登录/数据库） ====== */
 (function(){
   var NID='001', CH=<?= (int)$activeChapter ?>;
@@ -2934,7 +2980,7 @@ try { if (typeof initApp === 'function') initApp('reading'); } catch(e) {}
     pendingText=sel.toString();
     var rect=sel.getRangeAt(0).getBoundingClientRect();
     bar.style.display='block';
-    bar.style.top=(window.scrollY+rect.top-42)+'px';
+    bar.style.top=(window.scrollY+rect.bottom+10)+'px';
     bar.style.left=(window.scrollX+rect.left+rect.width/2-46)+'px';
   });
   bar.addEventListener('mousedown', function(e){ e.preventDefault(); });
