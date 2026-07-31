@@ -1,0 +1,47 @@
+# ================================================
+# Novel Reader - Apache 配置 (.htaccess)
+# 兼容 Apache 2.2 / 2.4+（新旧语法自动适配）
+# ================================================
+
+# 禁止目录列表 + 隐藏服务器版本
+Options -Indexes
+ServerSignature Off
+
+# 默认首页
+<IfModule mod_dir.c>
+    DirectoryIndex index.php index.html
+</IfModule>
+
+# ========== 🔒 禁止访问隐藏文件 (.htaccess / .git 等) ==========
+<FilesMatch "^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ========== 🔒 禁止访问敏感文件类型 ==========
+<FilesMatch "\.(sql|bak|old|log|zip|tar|gz|ini|env|sh|py|md|json|lock|conf)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ========== 🔒 禁止访问敏感目录 ==========
+<IfModule mod_alias.c>
+    RedirectMatch 403 ^/?(DBbackup|config|controllers|includes|models|usr|submissions|tts_cache)/.*$
+</IfModule>
+
+# ========== 🚫 禁止直接执行上传目录中的脚本 ==========
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # 上传/用户目录禁止执行 PHP
+    RewriteRule ^(submissions|usr|avatars|tts_cache)/.*\.(php|php5|phtml|pht|cgi|pl|py|sh)$ - [F,L]
+</IfModule>
